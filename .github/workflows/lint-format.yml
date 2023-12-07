@@ -1,0 +1,23 @@
+name: Lint and format
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+env:
+  RUSTFLAGS: "-Dwarnings"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Format
+        run: cargo fmt --check --message-format short
+      - name: Clippy
+        run: cargo clippy
+      - name: Tests
+        run: cargo test
